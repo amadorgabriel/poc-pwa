@@ -18,7 +18,7 @@ export default function CreateScopePage() {
         </header>
 
         <main>
-          <Requirement editable />
+          <Requirement id={999} editable title="Digite um título aqui" subTitle="E uma descrição também" />
         </main>
 
         <footer className="flex justify-center grid grid-cols-2 gap-4">
