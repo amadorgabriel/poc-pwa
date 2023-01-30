@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-slate-50;
+}
+
+.container {
+  @apply grid place-items-center h-screen;
+}
+
+.content {
+  @apply grid gap-6 grid-cols-1;
+}
+
+.button {
+  @apply py-2 px-4 flex outline outline-1 rounded transition;
+}
+
+.button-outline {
+  @apply outline-transparent hover:outline-sky-600 hover:text-sky-600;
+}
+
+.button-flat {
+  @apply outline-sky-600 hover:outline-sky-600 text-sky-600 hover:text-sky-600  bg-sky-50 hover:bg-sky-100;
+}
+
+.common-text {
+  @apply py-2 text-base leading-7 text-gray-600;
+}
+
+.scope-item {
+  @apply bg-white p-4 drop-shadow-md rounded cursor-pointer outline outline-1 outline-transparent hover:outline-gray-400 transition;
+}
+
+.question-item {
+  @apply flex justify-between p-4;
+}
+
+.question-item button {
+  @apply py-1 px-3 mx-1;
+}
+
+.radio {
+  @apply w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600;
+}
+
+.radio-label {
+  @apply ml-2 text-lg font-medium text-gray-600 dark:text-gray-300 align-middle;
+}
