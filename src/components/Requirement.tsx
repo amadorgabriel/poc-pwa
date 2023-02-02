@@ -32,7 +32,7 @@ export const Requirement = ({
 
   useEffect(() => {
     if (defaultValue) setSelected(defaultValue);
-  }, []);
+  }, [defaultValue]);
 
   return (
     <section>

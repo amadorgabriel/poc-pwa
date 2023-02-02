@@ -18,10 +18,15 @@ export default function CreateScopePage() {
         </header>
 
         <main>
-          <Requirement id={999} editable title="Digite um título aqui" subTitle="E uma descrição também" />
+          <Requirement
+            id={999}
+            editable
+            title="Digite um título aqui"
+            subTitle="E uma descrição também"
+          />
         </main>
 
-        <footer className="flex justify-center grid grid-cols-2 gap-4">
+        <footer className="justify-center grid grid-cols-2 gap-4">
           <button className="button button-flat flex">
             <p className="pr-2">&#43;</p>
             Novo Requisito

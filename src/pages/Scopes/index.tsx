@@ -6,6 +6,17 @@ type Scope = {
   name: string;
   description: string;
   active: boolean;
+  requirements: RequirementType[];
+};
+
+export type RequirementType = {
+  id: number;
+  scopeId: number;
+  title: string;
+  subTitle: string;
+  evaluation: {
+    evaluated?: string;
+  };
 };
 
 export default function ScopePage() {
@@ -43,11 +54,15 @@ export default function ScopePage() {
 
       <main className="grid gap-y-4">
         {scopes?.map((scope) => (
-          <Link key={scope.id} to={`/attendance/${scope.id}`}>
+          <Link
+            key={scope.id}
+            to={`/attendance/${scope.id}`}
+            state={{ requirements: scope.requirements }}
+          >
             <div className="scope-item">
               <div className="flex justify-between">
                 <h3 className="font-bold mr-2">{scope.name}</h3>
-                <small>{scope.active ? "Não Atendido" : "Atendido"}</small>
+                <small>{scope.active ? "Atendido" : "Não Atendido"}</small>
               </div>
               <p>{scope.description}</p>
             </div>

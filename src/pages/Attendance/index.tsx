@@ -1,5 +1,6 @@
-import React, { FormEvent, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import React, { FormEvent, useState } from "react";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { RequirementType } from "../Scopes";
 
 const Requirement = React.lazy(() => import("../../components"));
 
@@ -8,39 +9,15 @@ export type EvaluatedRequirement = {
   evaluation: string;
 };
 
-type RequirementType = {
-  id: number;
-  scopeId: number;
-  title: string;
-  subTitle: string;
-  evaluation: {
-    evaluated: string;
-  };
-};
-
 export default function AttendancePage() {
   const { id } = useParams();
+  const { state } = useLocation();
+
   const navigate = useNavigate();
 
-  const [requirements, setRequirements] = useState<RequirementType[]>([]);
   const [evaluatedRequirements, setEvaluateRequirements] = useState<
     EvaluatedRequirement[]
   >([]);
-
-  const fetchRequirementsFromScopeId = () => {
-    try {
-      fetch(`${process.env.REACT_APP_API_URL}/scope/${id}/requirements`)
-        .then((response) => {
-          return response.json();
-        })
-        .then((data) => {
-          setRequirements(data);
-        });
-    } catch (e) {
-      console.log("Falha ao carregar a lista de requisitos ;(");
-      console.log(e);
-    }
-  };
 
   const saveAttendance = (e: FormEvent) => {
     e.preventDefault();
@@ -49,14 +26,14 @@ export default function AttendancePage() {
 
     try {
       Promise.all(
-        evaluatedRequirements.map((req) => {
+        evaluatedRequirements.map(async (req) => {
           const updatedRequirement = {
             evaluation: {
               evaluated: req.evaluation,
             },
           };
 
-          fetch(
+          await fetch(
             `${process.env.REACT_APP_API_URL}/scope/${id}/requirements/${req.requirementId}`,
             {
               method: "PUT",
@@ -72,15 +49,11 @@ export default function AttendancePage() {
       console.log("Avaliações salvas com sucesso!");
 
       navigate("/");
-    } catch (e) {
-      console.log("Falha ao salvar as avaliações ;(");
-      console.log(e);
+    } catch (error) {
+      console.log(`Falha em salvar avaliação :( - ${error}`);
+      console.log("Os dados foram salvos para para sincronização futura");
     }
   };
-
-  useEffect(() => {
-    fetchRequirementsFromScopeId();
-  }, []);
 
   return (
     <>
@@ -91,7 +64,7 @@ export default function AttendancePage() {
           <p className="common-text">Preencha os resultados.</p>
         </header>
 
-        {requirements?.map((req) => (
+        {state?.requirements?.map((req: RequirementType) => (
           <Requirement
             key={req.id}
             id={req.id as number}

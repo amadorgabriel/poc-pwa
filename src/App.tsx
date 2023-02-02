@@ -33,6 +33,10 @@ const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path: "*",
+    element: <p>Not Found :(</p>,
+  },
 ]);
 
 export const App = () => {
