@@ -17,7 +17,7 @@ export default function HomePage() {
             .
           </p>
 
-          <p>
+          {/* <p>
             Esse browser
             {"serviceWorker" in navigator ? (
               <b className="text-rose-700"> não suporta </b>
@@ -25,7 +25,7 @@ export default function HomePage() {
               <b className="text-emerald-700"> suporta </b>
             )}
             Service Workers (SW).
-          </p>
+          </p> */}
         </div>
       </div>
 
