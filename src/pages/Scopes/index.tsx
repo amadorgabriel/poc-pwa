@@ -20,11 +20,14 @@ export type RequirementType = {
 };
 
 export default function ScopePage() {
+  const [isLoading, setIsLoading] = useState(true);
   const [scopes, setScopes] = useState<Scope[]>([]);
 
-  const fetchScopes = () => {
+  const fetchScopes = async () => {
     try {
-      fetch(`${process.env.REACT_APP_API_URL}/scope`)
+      setIsLoading(true);
+
+      await fetch(`${process.env.REACT_APP_API_URL}/scope`)
         .then((response) => {
           return response.json();
         })
@@ -33,6 +36,8 @@ export default function ScopePage() {
         });
     } catch (e) {
       console.log(e);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -43,8 +48,16 @@ export default function ScopePage() {
   return (
     <>
       <header className="text-center">
-        <div>
+        <div className="flex justify-between">
           <h1 className="text-3xl font-bold">Lista de Escopos</h1>
+          <button
+            className="button button-flat"
+            onClick={() => {
+              window.location.reload();
+            }}
+          >
+            <p>&#x21bb;</p>
+          </button>
         </div>
 
         <p className="common-text">
@@ -53,21 +66,25 @@ export default function ScopePage() {
       </header>
 
       <main className="grid gap-y-4">
-        {scopes?.map((scope) => (
-          <Link
-            key={scope.id}
-            to={`/attendance/${scope.id}`}
-            state={{ requirements: scope.requirements }}
-          >
-            <div className="scope-item">
-              <div className="flex justify-between">
-                <h3 className="font-bold mr-2">{scope.name}</h3>
-                <small>{scope.active ? "Atendido" : "Não Atendido"}</small>
+        {isLoading ? (
+          <p>Loading</p>
+        ) : (
+          scopes?.map((scope) => (
+            <Link
+              key={scope.id}
+              to={`/attendance/${scope.id}`}
+              state={{ requirements: scope.requirements }}
+            >
+              <div className="scope-item">
+                <div className="flex justify-between">
+                  <h3 className="font-bold mr-2">{scope.name}</h3>
+                  <small>{scope.active ? "Atendido" : "Não Atendido"}</small>
+                </div>
+                <p>{scope.description}</p>
               </div>
-              <p>{scope.description}</p>
-            </div>
-          </Link>
-        ))}
+            </Link>
+          ))
+        )}
       </main>
 
       <footer className="mt-2 flex justify-center mb-6">

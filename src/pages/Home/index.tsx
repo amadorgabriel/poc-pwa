@@ -16,16 +16,6 @@ export default function HomePage() {
             )}
             .
           </p>
-
-          {/* <p>
-            Esse browser
-            {"serviceWorker" in navigator ? (
-              <b className="text-rose-700"> não suporta </b>
-            ) : (
-              <b className="text-emerald-700"> suporta </b>
-            )}
-            Service Workers (SW).
-          </p> */}
         </div>
       </div>
 

@@ -55,7 +55,7 @@ self.addEventListener("message", (event) => {
   }
 });
 
-// Any other custom service worker logic can go here.
+// Customization
 registerRoute(
   ({ request }) => request.destination === "image",
   new CacheFirst({
@@ -88,7 +88,6 @@ registerRoute(
   "GET"
 );
 
-// #3 Retry request when back online mode
 const bgSyncPlugin = new BackgroundSyncPlugin("scopes-queue", {
   maxRetentionTime: 24 * 60, // Retry for max of 24 Hours (specified in minutes)
 });
@@ -103,3 +102,26 @@ registerRoute(
   }),
   "PUT"
 );
+
+// const FALLBACK_HTML = "/static/js/772.456e458d.chunk.js	";
+// const CACHE_NAME = "offline-fallback";
+
+// self.addEventListener("install", (event) => {
+//   event.waitUntil(
+//     caches.open(CACHE_NAME).then((cache) => cache.add(FALLBACK_HTML))
+//   );
+// });
+
+// const fallbackPlugin = {
+//   handlerDidError: async () => {
+//     const fallbackResponse = await caches.match(FALLBACK_HTML, {
+//       cacheName: CACHE_NAME,
+//     });
+//     return fallbackResponse;
+//   },
+// };
+
+// registerRoute(
+//   ({ url }) => url.origin === "https://63d5dae0dc3c55baf42d8585.mockapi.io",
+//   new StaleWhileRevalidate({ plugins: [fallbackPlugin] })
+// );
